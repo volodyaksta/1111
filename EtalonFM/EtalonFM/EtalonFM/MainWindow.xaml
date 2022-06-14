@@ -1,0 +1,38 @@
+﻿<Window x:Class="EtalonFM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:EtalonFM"
+        mc:Ignorable="d"
+        Title="Эталон FM" Height="500" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#ABCDEF">
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Image Source="D:\Смирноff\EtalonFM\main.ico" Cursor="Hand" MouseDown="Image_MouseDown" Margin="5 5 5 5" ToolTip="Перейти в меню"/>
+                <TextBlock Text="Эталон FM" VerticalAlignment="Center" FontSize="25" Foreground="#FF00A2E8" FontWeight="Heavy" FontStyle="Italic"/>
+            </StackPanel>
+        </Grid>
+        <Grid Background="#ABCDEF" Grid.Row="2"/>
+        <Frame Name="MainFrame" ContentRendered="MainFrame_ContentRendered" Grid.RowSpan="3" NavigationUIVisibility="Hidden"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Name="BtnBack" Content="НАЗАД" Click="BtnBack_Click" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Button Name="BtnOut" Grid.Row="2" Content="ВЫЙТИ" Click="BtnOut_Click" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

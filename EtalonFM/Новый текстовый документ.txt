@@ -1,0 +1,54 @@
+create table [Client] (
+c_ID int not null identity primary key,
+c_surname nvarchar(50) not null,
+c_name nvarchar(50) not null,
+c_patronymic nvarchar(50) null,
+c_phone nvarchar(12) not null,
+c_email nvarchar(50) not null
+);
+
+create table [Location] (
+l_ID int not null identity primary key,
+l_location nvarchar(50) not null,
+l_size nvarchar(50) not null
+);
+
+create table [AdType] (
+a_ID int not null identity primary key,
+a_type nvarchar(50) not null,
+a_cost decimal(18, 2) not null
+);
+
+create table [Order] (
+o_ID int not null identity primary key,
+o_managerID int not null,
+o_clientID int not null,
+o_typeID int not null,
+o_locationID int not null,
+o_duration int not null,
+o_cost decimal(18, 2) not null,
+o_dateStart date not null,
+o_dateEnd date not null,
+foreign key (o_managerID) references [Managerr] (m_ID),
+foreign key (o_clientID) references [Client] (c_ID),
+foreign key (o_typeID) references [AdType] (a_ID),
+foreign key (o_locationID) references [Location] (l_ID)
+);
+
+create table [Managerr] (
+m_ID int not null identity primary key,
+m_surname nvarchar(50) not null,
+m_name nvarchar(50) not null,
+m_patronymic nvarchar(50) null,
+m_phone nvarchar(12) not null,
+m_email nvarchar(50) not null,
+m_userID int not null,
+foreign key (m_userID) references [User] (u_ID)
+);
+
+create table [User] (
+u_ID int not null identity primary key,
+u_login nvarchar(50) not null,
+u_password nvarchar(50) not null,
+u_role int not null
+);

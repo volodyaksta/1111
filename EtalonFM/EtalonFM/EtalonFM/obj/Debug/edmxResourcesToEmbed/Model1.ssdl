@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище EtalonFMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdType">
+    <Key>
+      <PropertyRef Name="a_ID" />
+    </Key>
+    <Property Name="a_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="a_type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="a_cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="c_ID" />
+    </Key>
+    <Property Name="c_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="c_surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="c_name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="c_patronymic" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="c_phone" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="c_email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="l_ID" />
+    </Key>
+    <Property Name="l_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="l_location" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="l_size" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="o_ID" />
+    </Key>
+    <Property Name="o_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="o_clientID" Type="int" Nullable="false" />
+    <Property Name="o_typeID" Type="int" Nullable="false" />
+    <Property Name="o_locationID" Type="int" Nullable="false" />
+    <Property Name="o_duration" Type="int" Nullable="false" />
+    <Property Name="o_cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="o_date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="u_ID" />
+    </Key>
+    <Property Name="u_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="u_login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="u_password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="u_role" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Order_AdType">
+    <End Role="AdType" Type="Self.AdType" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdType">
+        <PropertyRef Name="a_ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="o_typeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="c_ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="o_clientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="l_ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="o_locationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище EtalonFMModelContainer">
+    <EntitySet Name="AdType" EntityType="Self.AdType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Order_AdType" Association="Self.FK_Order_AdType">
+      <End Role="AdType" EntitySet="AdType" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Location" Association="Self.FK_Order_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

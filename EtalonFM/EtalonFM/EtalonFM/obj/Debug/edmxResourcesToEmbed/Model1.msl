@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище EtalonFMModelContainer" CdmEntityContainer="EtalonFMEntities">
+    <EntitySetMapping Name="AdTypes">
+      <EntityTypeMapping TypeName="EtalonFMModel.AdType">
+        <MappingFragment StoreEntitySet="AdType">
+          <ScalarProperty Name="a_ID" ColumnName="a_ID" />
+          <ScalarProperty Name="a_type" ColumnName="a_type" />
+          <ScalarProperty Name="a_cost" ColumnName="a_cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="EtalonFMModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="c_ID" ColumnName="c_ID" />
+          <ScalarProperty Name="c_surname" ColumnName="c_surname" />
+          <ScalarProperty Name="c_name" ColumnName="c_name" />
+          <ScalarProperty Name="c_patronymic" ColumnName="c_patronymic" />
+          <ScalarProperty Name="c_phone" ColumnName="c_phone" />
+          <ScalarProperty Name="c_email" ColumnName="c_email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="EtalonFMModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="l_ID" ColumnName="l_ID" />
+          <ScalarProperty Name="l_location" ColumnName="l_location" />
+          <ScalarProperty Name="l_size" ColumnName="l_size" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="EtalonFMModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="o_ID" ColumnName="o_ID" />
+          <ScalarProperty Name="o_clientID" ColumnName="o_clientID" />
+          <ScalarProperty Name="o_typeID" ColumnName="o_typeID" />
+          <ScalarProperty Name="o_locationID" ColumnName="o_locationID" />
+          <ScalarProperty Name="o_duration" ColumnName="o_duration" />
+          <ScalarProperty Name="o_cost" ColumnName="o_cost" />
+          <ScalarProperty Name="o_date" ColumnName="o_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="EtalonFMModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="u_ID" ColumnName="u_ID" />
+          <ScalarProperty Name="u_login" ColumnName="u_login" />
+          <ScalarProperty Name="u_password" ColumnName="u_password" />
+          <ScalarProperty Name="u_role" ColumnName="u_role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

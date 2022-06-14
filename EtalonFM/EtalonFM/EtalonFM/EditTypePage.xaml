@@ -1,0 +1,17 @@
+﻿<Page x:Class="EtalonFM.EditTypePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:EtalonFM"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EditTypePage">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
+        <TextBlock FontSize="20" Text="Тип баннера"/>
+        <TextBox Text="{Binding a_type}" Name="type" MaxLength="100" md:HintAssist.Hint="Тип" md:HintAssist.IsFloating="True"/>
+        <TextBox Text="{Binding a_cost}" Name="cost" md:HintAssist.Hint="Цена" md:HintAssist.IsFloating="True"/>
+        <Button Content="Сохранить" Name="BtnSave" Click="BtnSave_Click" Margin="0 5 0 5" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+    </StackPanel>
+</Page>

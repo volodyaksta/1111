@@ -1,0 +1,28 @@
+private static EtalonFMEntities _context;
+
+        public static EtalonFMEntities GetContext()
+        {
+            if (_context == null) _context = new EtalonFMEntities();
+            return _context;
+        }
+
+
+
+
+ÊËÈÅÍÒ
+public string c_fullname
+        {
+            get => $"{ c_surname} { c_name} { c_patronymic}";
+        }
+
+ÌÅÍÅÄÆÅÐ
+public string m_fullname
+        {
+            get => $"{ m_surname} { m_name} { m_patronymic}";
+        }
+
+ÏÎËÎÆÅÍÈÅ
+public string loc
+        {
+            get => $"{l_location} { l_size}";
+        }

@@ -1,0 +1,37 @@
+﻿<Page x:Class="EtalonFM.UserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EtalonFM"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserPage"
+      Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="DGridUser" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" Background="#edf5fc">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Логин" Binding="{Binding u_login}"/>
+                <DataGridTextColumn Width="*" Header="Пароль" Binding="{Binding u_password}"/>
+                <DataGridTextColumn Width="*" Header="Роль (0 - менеджер, 1 - администратор)" Binding="{Binding u_role}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Изменить" Name="BtnEd" Click="BtnEd_Click" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button Content="Добавить" Name="BtnAdd" Click="BtnAdd_Click" Margin="10 0 10 10" Style="{DynamicResource MaterialDesignPaperButton}"/>
+            <Button Content="Удалить" Name="BtnDel" Click="BtnDel_Click" Margin="10 0 10 10" Style="{DynamicResource MaterialDesignPaperButton}"/>
+        </StackPanel>
+    </Grid>
+</Page>

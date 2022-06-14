@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище EtalonFMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdType">
+          <Key>
+            <PropertyRef Name="a_ID" />
+          </Key>
+          <Property Name="a_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="a_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="a_cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="c_ID" />
+          </Key>
+          <Property Name="c_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="c_phone" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="c_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="l_ID" />
+          </Key>
+          <Property Name="l_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="l_location" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="l_size" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manag">
+          <Key>
+            <PropertyRef Name="m_ID" />
+          </Key>
+          <Property Name="m_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="m_surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="m_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="m_patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_phone" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="m_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="m_userID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="o_ID" />
+          </Key>
+          <Property Name="o_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="o_managerID" Type="int" Nullable="false" />
+          <Property Name="o_clientID" Type="int" Nullable="false" />
+          <Property Name="o_typeID" Type="int" Nullable="false" />
+          <Property Name="o_locationID" Type="int" Nullable="false" />
+          <Property Name="o_duration" Type="int" Nullable="false" />
+          <Property Name="o_cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="o_dateStart" Type="date" Nullable="false" />
+          <Property Name="o_dateEnd" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="u_ID" />
+          </Key>
+          <Property Name="u_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_role" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Manag__m_userID__182C9B23">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Manag" Type="Self.Manag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="u_ID" />
+            </Principal>
+            <Dependent Role="Manag">
+              <PropertyRef Name="m_userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_clientI__1BFD2C07">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="c_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_locatio__1DE57479">
+          <End Role="Location" Type="Self.Location" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="l_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_manager__1B0907CE">
+          <End Role="Manag" Type="Self.Manag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manag">
+              <PropertyRef Name="m_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_managerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_typeID__1CF15040">
+          <End Role="AdType" Type="Self.AdType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdType">
+              <PropertyRef Name="a_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище EtalonFMModelContainer">
+          <EntitySet Name="AdType" EntityType="Self.AdType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manag" EntityType="Self.Manag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Manag__m_userID__182C9B23" Association="Self.FK__Manag__m_userID__182C9B23">
+            <End Role="User" EntitySet="User" />
+            <End Role="Manag" EntitySet="Manag" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_clientI__1BFD2C07" Association="Self.FK__Order__o_clientI__1BFD2C07">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_locatio__1DE57479" Association="Self.FK__Order__o_locatio__1DE57479">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_manager__1B0907CE" Association="Self.FK__Order__o_manager__1B0907CE">
+            <End Role="Manag" EntitySet="Manag" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_typeID__1CF15040" Association="Self.FK__Order__o_typeID__1CF15040">
+            <End Role="AdType" EntitySet="AdType" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EtalonFMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdType">
+          <Key>
+            <PropertyRef Name="a_ID" />
+          </Key>
+          <Property Name="a_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="a_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="a_cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_typeID__1CF15040" FromRole="AdType" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="c_ID" />
+          </Key>
+          <Property Name="c_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_clientI__1BFD2C07" FromRole="Client" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="l_ID" />
+          </Key>
+          <Property Name="l_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="l_location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="l_size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_locatio__1DE57479" FromRole="Location" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Manag">
+          <Key>
+            <PropertyRef Name="m_ID" />
+          </Key>
+          <Property Name="m_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="m_surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="m_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="m_patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="m_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="m_userID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Manag__m_userID__182C9B23" FromRole="Manag" ToRole="User" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_manager__1B0907CE" FromRole="Manag" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="o_ID" />
+          </Key>
+          <Property Name="o_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="o_managerID" Type="Int32" Nullable="false" />
+          <Property Name="o_clientID" Type="Int32" Nullable="false" />
+          <Property Name="o_typeID" Type="Int32" Nullable="false" />
+          <Property Name="o_locationID" Type="Int32" Nullable="false" />
+          <Property Name="o_duration" Type="Int32" Nullable="false" />
+          <Property Name="o_cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="o_dateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="o_dateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AdType" Relationship="Self.FK__Order__o_typeID__1CF15040" FromRole="Order" ToRole="AdType" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Order__o_clientI__1BFD2C07" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Order__o_locatio__1DE57479" FromRole="Order" ToRole="Location" />
+          <NavigationProperty Name="Manag" Relationship="Self.FK__Order__o_manager__1B0907CE" FromRole="Order" ToRole="Manag" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="u_ID" />
+          </Key>
+          <Property Name="u_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="u_role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Manags" Relationship="Self.FK__Manag__m_userID__182C9B23" FromRole="User" ToRole="Manag" />
+        </EntityType>
+        <Association Name="FK__Order__o_typeID__1CF15040">
+          <End Role="AdType" Type="Self.AdType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdType">
+              <PropertyRef Name="a_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_clientI__1BFD2C07">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="c_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_locatio__1DE57479">
+          <End Role="Location" Type="Self.Location" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="l_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Manag__m_userID__182C9B23">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Manag" Type="Self.Manag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="u_ID" />
+            </Principal>
+            <Dependent Role="Manag">
+              <PropertyRef Name="m_userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_manager__1B0907CE">
+          <End Role="Manag" Type="Self.Manag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manag">
+              <PropertyRef Name="m_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_managerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EtalonFMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdTypes" EntityType="Self.AdType" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Manags" EntityType="Self.Manag" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Order__o_typeID__1CF15040" Association="Self.FK__Order__o_typeID__1CF15040">
+            <End Role="AdType" EntitySet="AdTypes" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_clientI__1BFD2C07" Association="Self.FK__Order__o_clientI__1BFD2C07">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_locatio__1DE57479" Association="Self.FK__Order__o_locatio__1DE57479">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Manag__m_userID__182C9B23" Association="Self.FK__Manag__m_userID__182C9B23">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Manag" EntitySet="Manags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_manager__1B0907CE" Association="Self.FK__Order__o_manager__1B0907CE">
+            <End Role="Manag" EntitySet="Manags" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище EtalonFMModelContainer" CdmEntityContainer="EtalonFMEntities">
+          <EntitySetMapping Name="AdTypes">
+            <EntityTypeMapping TypeName="EtalonFMModel.AdType">
+              <MappingFragment StoreEntitySet="AdType">
+                <ScalarProperty Name="a_ID" ColumnName="a_ID" />
+                <ScalarProperty Name="a_type" ColumnName="a_type" />
+                <ScalarProperty Name="a_cost" ColumnName="a_cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="EtalonFMModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="c_ID" ColumnName="c_ID" />
+                <ScalarProperty Name="c_surname" ColumnName="c_surname" />
+                <ScalarProperty Name="c_name" ColumnName="c_name" />
+                <ScalarProperty Name="c_patronymic" ColumnName="c_patronymic" />
+                <ScalarProperty Name="c_phone" ColumnName="c_phone" />
+                <ScalarProperty Name="c_email" ColumnName="c_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="EtalonFMModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="l_ID" ColumnName="l_ID" />
+                <ScalarProperty Name="l_location" ColumnName="l_location" />
+                <ScalarProperty Name="l_size" ColumnName="l_size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manags">
+            <EntityTypeMapping TypeName="EtalonFMModel.Manag">
+              <MappingFragment StoreEntitySet="Manag">
+                <ScalarProperty Name="m_ID" ColumnName="m_ID" />
+                <ScalarProperty Name="m_surname" ColumnName="m_surname" />
+                <ScalarProperty Name="m_name" ColumnName="m_name" />
+                <ScalarProperty Name="m_patronymic" ColumnName="m_patronymic" />
+                <ScalarProperty Name="m_phone" ColumnName="m_phone" />
+                <ScalarProperty Name="m_email" ColumnName="m_email" />
+                <ScalarProperty Name="m_userID" ColumnName="m_userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="EtalonFMModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="o_ID" ColumnName="o_ID" />
+                <ScalarProperty Name="o_managerID" ColumnName="o_managerID" />
+                <ScalarProperty Name="o_clientID" ColumnName="o_clientID" />
+                <ScalarProperty Name="o_typeID" ColumnName="o_typeID" />
+                <ScalarProperty Name="o_locationID" ColumnName="o_locationID" />
+                <ScalarProperty Name="o_duration" ColumnName="o_duration" />
+                <ScalarProperty Name="o_cost" ColumnName="o_cost" />
+                <ScalarProperty Name="o_dateStart" ColumnName="o_dateStart" />
+                <ScalarProperty Name="o_dateEnd" ColumnName="o_dateEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EtalonFMModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="u_ID" ColumnName="u_ID" />
+                <ScalarProperty Name="u_login" ColumnName="u_login" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_role" ColumnName="u_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
